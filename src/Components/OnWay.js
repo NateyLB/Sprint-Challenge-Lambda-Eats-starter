@@ -15,16 +15,15 @@ const OnWay = (props) =>{
             toppings += "pineapple "
         }
         if(pizza.bacon == true){
-            toppings += "bacon"
+            toppings += "bacon "
         }
-        toppings += "."
         const formatter = toppings.replace(/ /g,", ")
         return formatter
     }
 
     return(
         <div class="on-way">
-            <h1>{pizza.name}, your {pizza.size} {pizza.sauce} sauce pizza with {makeString(pizza)} Is on the way!</h1>
+            <h1>{pizza.name}, your {pizza.size} {pizza.sauce} sauce pizza with {makeString(pizza)} is on the way!</h1>
         </div>
 
     );
