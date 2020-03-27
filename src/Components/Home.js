@@ -7,7 +7,7 @@ const Home = (props) => {
             <div class="your-fav">
                 <h1>Your favorite foods delivered while coding!</h1>
                 <Link to={`/pizza`}>
-                    <button class="pizza-button">Pizza!</button>
+                    <button data-cy="pizza" class="pizza-button">Pizza!</button>
                 </Link>
             </div>
 

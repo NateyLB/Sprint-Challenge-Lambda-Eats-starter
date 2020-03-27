@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 const formSchema = yup.object().shape({
     size: yup.string().required("Please select a size"),
     sauce: yup.string().required("Please select a sauce"),
@@ -8,11 +10,14 @@ const formSchema = yup.object().shape({
     sausage: yup.string(),
     pineapple: yup.string(),
     bacon: yup.string(),
+    glutenFree: yup.string(),
     special: yup.string(),
     name: yup.string().min(2).required("Please include a name")
 });
 
 const Pizza = (props) => {
+    const pizzaInfo = props.pizza;
+    const setPizzaInfo = props.setPizza;
 
     const [formState, setFormState] = useState({
         size: "",
@@ -21,6 +26,7 @@ const Pizza = (props) => {
         sausage: "",
         pineapple: "",
         bacon: "",
+        glutenFree:"",
         special: "none",
         name: ""
 
@@ -32,8 +38,8 @@ const Pizza = (props) => {
         name: ""
     })
 
-     //state for submit button
-     const [buttonDisabled, setButtonDisabled] = useState(true);
+    //state for submit button
+    const [buttonDisabled, setButtonDisabled] = useState(true);
 
     useEffect(() => {
         formSchema.isValid(formState).then(valid => {
@@ -70,6 +76,7 @@ const Pizza = (props) => {
                 event.target.type === "checkbox" ? event.target.checked : event.target.value
         };
         validateChange(event);
+        setPizzaInfo(newFormData);
         setFormState(newFormData);
         console.log(formState)
     };
@@ -89,6 +96,7 @@ const Pizza = (props) => {
                     sausage: "",
                     pineapple: "",
                     bacon: "",
+                    glutenFree:"",
                     special: "",
                     name: ""
                 });
@@ -106,12 +114,13 @@ const Pizza = (props) => {
             <img class="pizza-img" src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1510&q=80" alt="PIZZA!" />
             <div class="inner-pizza-container">
                 <h2>Build Your Own Pizza</h2>
+
                 <div class="grey-out">
                     <h3>Choice of Size</h3>
                     <h4>Required</h4>
                 </div>
                 <div class="white-space">
-                    <select class="size" name="size" onChange={inputChange}>
+                    <select data-cy="size" class="size" name="size" onChange={inputChange}>
                         <option></option>
                         <option value="Small">Small</option>
                         <option value="Medium">Medium</option>
@@ -120,11 +129,13 @@ const Pizza = (props) => {
                     </select>
                     {errors.size.length > 0 ? (<p >{errors.size}</p>) : null}
                 </div>
+
+
                 <div class="grey-out">
                     <h3>Choice of Sauce</h3>
                     <h4>Required</h4>
                 </div>
-                <div class="white-space sauce-select">
+                <div data-cy="sauce" class="white-space sauce-select">
                     <label>
                         <input type="radio" name="sauce" value="Classic Red" onClick={inputChange} />
                         Classic Red
@@ -143,27 +154,38 @@ const Pizza = (props) => {
                     </label>
                     {errors.sauce.length > 0 ? (<p >{errors.sauce}</p>) : null}
                 </div>
+
+
                 <div class="grey-out">
                     <h3>Add Toppings</h3>
                     <h4>Choose Up To 10</h4>
                 </div>
                 <div class="white-space">
                     <label htmlFor="pepperoni">
-                        <input type="checkbox" name="pepperoni" checked={formState.pepperoni} onChange={inputChange} />
+                        <input data-cy="pepperoni" type="checkbox" name="pepperoni" checked={formState.pepperoni} onChange={inputChange} />
                         Pepperoni
                 </label>
                     <label htmlFor="sausage">
-                        <input type="checkbox" name="sausage" checked={formState.sausage} onChange={inputChange} />
+                        <input data-cy="sausage" type="checkbox" name="sausage" checked={formState.sausage} onChange={inputChange} />
                         Sausage
                 </label>
                     <label htmlFor="pineapple">
-                        <input type="checkbox" name="pineapple" checked={formState.pineapple} onChange={inputChange} />
+                        <input data-cy="pineapple" type="checkbox" name="pineapple" checked={formState.pineapple} onChange={inputChange} />
                         Pineapple
                 </label>
                     <label htmlFor="bacon">
-                        <input type="checkbox" name="bacon" checked={formState.bacon} onChange={inputChange} />
+                        <input data-cy="bacon" type="checkbox" name="bacon" checked={formState.bacon} onChange={inputChange} />
                         Bacon
                 </label>
+                </div>
+                <div class="grey-out">
+                    <h3>Gluten Free Crust</h3>
+                </div>
+                <div class="white-space">
+                    <label class="switch">
+                        <input name="glutenFree" type="checkbox" checked={formState.glutenFree} onClick={inputChange} />
+                        <span data-cy="glutenFree" class="slider"></span>
+                    </label>
                 </div>
                 <div class="grey-out">
                     <h3>Special Instructions</h3>
@@ -173,11 +195,13 @@ const Pizza = (props) => {
                     <h3>Name</h3>
                 </div>
                 <div class="white-space">
-                    <input type="text" name="name" value={formState.name} onChange={inputChange} />
+                    <input data-cy="name" type="text" name="name" value={formState.name} onChange={inputChange} />
                     {errors.name.length > 0 ? (<p >{errors.name}</p>) : null}
                 </div>
             </div>
-            <button disabled={buttonDisabled}>Add To Order</button>
+            <Link to={`pizza/onway`}>
+            <button data-cy="submit" disabled={buttonDisabled}>Add To Order</button>
+            </Link>
         </form>
     );
 }
