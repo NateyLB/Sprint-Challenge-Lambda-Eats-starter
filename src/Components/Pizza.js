@@ -16,21 +16,8 @@ const formSchema = yup.object().shape({
 });
 
 const Pizza = (props) => {
-    const pizzaInfo = props.pizza;
-    const setPizzaInfo = props.setPizza;
-
-    const [formState, setFormState] = useState({
-        size: "",
-        sauce: "",
-        pepperoni: "",
-        sausage: "",
-        pineapple: "",
-        bacon: "",
-        glutenFree:"",
-        special: "none",
-        name: ""
-
-    })
+    const formState = props.pizza;
+    const setFormState = props.setPizza;
 
     const [errors, setErrors] = useState({
         size: "",
@@ -76,7 +63,6 @@ const Pizza = (props) => {
                 event.target.type === "checkbox" ? event.target.checked : event.target.value
         };
         validateChange(event);
-        setPizzaInfo(newFormData);
         setFormState(newFormData);
         console.log(formState)
     };

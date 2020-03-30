@@ -99,8 +99,9 @@
 .sauce-select{
   display:flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: flex-start;
+  height: 20vh;
 }
 
 /* The switch - the box around the slider */
