@@ -16,6 +16,7 @@ const formSchema = yup.object().shape({
 });
 
 const Pizza = (props) => {
+    //state of form for the pizza
     const formState = props.pizza;
     const setFormState = props.setPizza;
 
@@ -64,15 +65,14 @@ const Pizza = (props) => {
         };
         validateChange(event);
         setFormState(newFormData);
-        console.log(formState)
     };
 
     const formSubmit = event => {
         event.preventDefault();
+        console.log("IN SUBMIT")
         axios.post("https://reqres.in/api/users", formState)
             .then(res => {
                 setPost(res.data);
-                console.log("data", res.data)
                 console.log("success", post);
                 setPizza([...pizza, res.data])
                 setFormState({
@@ -83,15 +83,16 @@ const Pizza = (props) => {
                     pineapple: "",
                     bacon: "",
                     glutenFree:"",
-                    special: "",
+                    special: "none",
                     name: ""
                 });
-                document.getElementById('users').style.display = "contents";
             })
             .catch(err => {
                 console.log(err.res);
             });
     };
+
+  
 
 
     return (
@@ -185,9 +186,9 @@ const Pizza = (props) => {
                     {errors.name.length > 0 ? (<p >{errors.name}</p>) : null}
                 </div>
             </div>
-            <Link to={`pizza/onway`}>
-            <button data-cy="submit" disabled={buttonDisabled}>Add To Order</button>
-            </Link>
+            {/* <Link to={`pizza/onway`}> */}
+            <input data-cy="submit" type="submit" onClick={(e) => e.history.push('pizza/onway')} disabled={buttonDisabled} Add To Order />
+            {/* </Link> */}
         </form>
     );
 }
