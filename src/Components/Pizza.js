@@ -186,9 +186,9 @@ const Pizza = (props) => {
                     {errors.name.length > 0 ? (<p >{errors.name}</p>) : null}
                 </div>
             </div>
-            {/* <Link to={`pizza/onway`}> */}
-            <input data-cy="submit" type="submit" onClick={(e) => e.history.push('pizza/onway')} disabled={buttonDisabled} Add To Order />
-            {/* </Link> */}
+            <Link to={`pizza/onway`}>
+            <input data-cy="submit" type="submit" disabled={buttonDisabled} Add To Order />
+            </Link>
         </form>
     );
 }
